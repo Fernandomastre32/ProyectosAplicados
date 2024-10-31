@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyCafeteria</string>
+    <string name="title_home">Pedido</string>
+    <string name="title_dashboard">Lista de Productos</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="registrar_pedido">Registrar Pedido</string>
+</resources>

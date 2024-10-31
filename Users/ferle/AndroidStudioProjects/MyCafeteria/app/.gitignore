@@ -1,0 +1,15 @@
+# Ignorar archivos de configuración locales
+*.iml
+.idea/
+local.properties
+
+# Ignorar archivos generados por el sistema
+/build/
+/app/build/
+
+# Ignorar directorios de datos
+/data/
+
+# Ignorar archivos de configuración de usuario de Android Studio
+.gradle/
+/build
