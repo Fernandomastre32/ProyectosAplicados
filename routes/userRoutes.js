@@ -1,3 +1,41 @@
+const express = require('express');
+const { UserController, upload } = require('../controllers/userController');
+const { validateUser } = require('../middlewares/validation');
+const { authenticate } = require('../middlewares/auth');
+
+const router = express.Router();
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: ID del usuario
+ *         name:
+ *           type: string
+ *           description: Nombre del usuario
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Correo electrónico del usuario
+ *       required:
+ *         - id
+ *         - name
+ *         - email
+ *
+ * security:
+ *   - bearerAuth: []
+ */
+
 /**
  * @swagger
  * /api/users:
@@ -18,6 +56,7 @@
  *       500:
  *         description: Error en el servidor
  */
+router.get('/users', authenticate, UserController.getAllUsers);
 
 /**
  * @swagger
@@ -30,9 +69,9 @@
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: integer
- *         required: true
  *         description: ID del usuario
  *     responses:
  *       200:
@@ -46,6 +85,7 @@
  *       500:
  *         description: Error en el servidor
  */
+router.get('/users/:id', authenticate, UserController.getUserById);
 
 /**
  * @swagger
@@ -81,6 +121,7 @@
  *       500:
  *         description: Error en el servidor
  */
+router.post('/users', authenticate, upload.single('imagen'), validateUser, UserController.createUser);
 
 /**
  * @swagger
@@ -93,9 +134,9 @@
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: integer
- *         required: true
  *         description: ID del usuario
  *     requestBody:
  *       required: true
@@ -125,6 +166,7 @@
  *       500:
  *         description: Error en el servidor
  */
+router.put('/users/:id', authenticate, validateUser, UserController.updateUser);
 
 /**
  * @swagger
@@ -137,9 +179,9 @@
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: integer
- *         required: true
  *         description: ID del usuario
  *     responses:
  *       200:
@@ -149,20 +191,6 @@
  *       500:
  *         description: Error en el servidor
  */
-
-
-const express = require('express');
-const { UserController, upload } = require('../controllers/userController');
-const { validateUser } = require('../middlewares/validation');
-const { authenticate } = require('../middlewares/auth');
-
-const router = express.Router();
-
-// Definir rutas
-router.get('/users', authenticate, UserController.getAllUsers);
-router.get('/users/:id', authenticate, UserController.getUserById);
-router.post('/users', authenticate, upload.single('imagen'), validateUser, UserController.createUser);  // Ruta para subir imagen
-router.put('/users/:id', authenticate, validateUser, UserController.updateUser);
 router.delete('/users/:id', authenticate, UserController.deleteUser);
 
 module.exports = router;

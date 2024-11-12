@@ -7,9 +7,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API de Ventas', // Título de la documentación
+      title: 'API de Usuarios', // Título de la documentación
       version: '1.0.0',       // Versión de la API
-      description: 'Documentación de API de ventas y detalles de ventas',
+      description: 'Documentación de API de Usuarios',
     },
     servers: [
       {
