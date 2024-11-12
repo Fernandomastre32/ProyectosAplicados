@@ -1,3 +1,4 @@
+// swaggerConfig.js
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
@@ -13,20 +14,18 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:'+process.env.PORT , // URL base del servidor de la API
+        url: 'http://localhost:' + process.env.PORT, // URL base del servidor de la API
       },
     ],
   },
-  apis: ['./routes/*.js'], // Rutas donde están tus archivos de rutas para generar la documentación automáticamente
+  apis: ['./routes/usuarios.js'], // Ruta específica del archivo de rutas para generar la documentación automáticamente
 };
 
 const swaggerSpec = swaggerJsdoc(options);
 
 const swaggerDocs = (app) => {
-  app.use('/api-docs', swaggerUi.serve, 
-    swaggerUi.setup(swaggerSpec));
-  console.log('Swagger docs available at http://localhost:'+
-    process.env.PORT+'/api-docs');
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  console.log('Swagger docs available at http://localhost:' + process.env.PORT + '/api-docs');
 };
 
 module.exports = swaggerDocs;

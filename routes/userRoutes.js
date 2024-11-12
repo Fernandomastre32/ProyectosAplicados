@@ -1,3 +1,4 @@
+// routes/usuarios.js
 const express = require('express');
 const { UserController, upload } = require('../controllers/userController');
 const { validateUser } = require('../middlewares/validation');
@@ -8,11 +9,6 @@ const router = express.Router();
 /**
  * @swagger
  * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
  *   schemas:
  *     User:
  *       type: object
@@ -31,9 +27,6 @@ const router = express.Router();
  *         - id
  *         - name
  *         - email
- *
- * security:
- *   - bearerAuth: []
  */
 
 /**
