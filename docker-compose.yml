@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # Servicio para la API en Node.js
+  node_api:
+    build: .
+    ports:
+      - "3000:3000"  # Mapea el puerto 3000 del contenedor al puerto 3000 de tu máquina
+    environment:
+      DATABASE_HOST: postgres_container  # Nombre del servicio de PostgreSQL
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: 123456789
+      DATABASE_NAME: Producto
+      CLOUDINARY_CLOUD_NAME: 184318589948572  # Reemplaza con tus credenciales de Cloudinary
+      CLOUDINARY_API_KEY: 184318589948572
+      CLOUDINARY_API_SECRET: tOSwL5TX-Jkzax4Xbmj4EhgcmOr8
+    networks:
+      - mynetwork  # Conecta el servicio a la red compartida para que se comunique con PostgreSQL
+    depends_on:
+      - postgres_container  # Se asegura de que PostgreSQL esté activo antes de levantar la API
+
+  # Servicio para la base de datos PostgreSQL
+  postgres_container:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456789
+      POSTGRES_DB: Producto
+    volumes:
+      - ./db_dump.sql:/docker-entrypoint-initdb.d/db_dump.sql  # Volcado de la base de datos
+      - postgres_data:/var/lib/postgresql/data  # Volumen para persistir los datos de PostgreSQL
+    networks:
+      - mynetwork
+
+# Define la red compartida para ambos servicios
+networks:
+  mynetwork:
+    driver: bridge
+
+# Define el volumen para almacenar los datos de PostgreSQL
+volumes:
+  postgres_data:
